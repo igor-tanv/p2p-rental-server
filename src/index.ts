@@ -1,12 +1,12 @@
-import express from 'express';
+import express, {Application} from 'express';
 import apiRoutes from './api';
 
-const app = express();
-const PORT = 3000;
+const app: Application = express();
+const PORT: number = 3000;
 
-app.use(express.json()); 
-app.use('/api', apiRoutes); 
+app.use(express.json());
+app.use('/api', apiRoutes);
 
-app.listen(PORT, () => {
+app.listen(PORT, (): void => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
