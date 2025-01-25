@@ -18,8 +18,10 @@ const hasConflict = (item: Item, startDate: string, endDate: string): boolean =>
 
     //check if any existing rental for the same item has an overlapping date range
     return rentals.some((rental) => {
-        rental.item.id === item.id && 
-        isDateRangeOverlapping(newStart, newEnd, new Date(rental.startDate), new Date(rental.endDate));
+        return (
+            rental.item.id === item.id &&
+            isDateRangeOverlapping(newStart, newEnd, new Date(rental.startDate), new Date(rental.endDate))
+        );
     });
 };
 
