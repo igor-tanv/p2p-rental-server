@@ -12,6 +12,7 @@ const isDateRangeOverlapping = (start1: Date, end1: Date, start2: Date, end2: Da
     return (start1 <= end2 && start2 <= end1);
 };
 
+// TODO: seperate into helpers module
 const hasConflict = (item: Item, startDate: string, endDate: string): boolean => { 
     const newStart = new Date(startDate);
     const newEnd = new Date(endDate);
@@ -34,4 +35,17 @@ const rentItem = (item: Item, startDate: string, endDate: string): string => {
     return 'Rental successful';
 };
 
-export { Rental, rentals, rentItem }; 
+const returnItem = (item: Item): string => {
+    const rentalIndex = rentals.findIndex((rental) => rental.item.id === item.id);
+
+    if (rentalIndex === -1) {
+        throw new Error('This item is not currently rented.');
+    }
+
+    rentals.splice(rentalIndex, 1);
+    return 'Item successfully returned.';
+};
+
+
+
+export { Rental, rentals, rentItem, returnItem }; 
