@@ -1,10 +1,15 @@
 import request, { Response } from 'supertest';
 import app, { stopServer } from '../src/index';
+import { rentals } from '../src/features/rentals'
 import { Item } from '../src/features/items';
 
 describe('Rentals API', () => {
     afterAll(() => {
         stopServer();
+    });
+
+    beforeEach(() => {
+        rentals.splice(0, rentals.length);
     });
 
     const item: Item = {
@@ -50,4 +55,17 @@ describe('Rentals API', () => {
             error: 'The item is already rented for the selected date range.',
         });
     });
+
+    it('should fail to return an item that is not rented', async () => {
+        const response: Response = await request(app)
+            .post('/api/return')
+            .send({ item });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toEqual({
+            error: 'This item is not currently rented.',
+        });
+    });
+
+
 });
