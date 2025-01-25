@@ -1,12 +1,31 @@
 import express, { Request, Response } from 'express';
-import { listItems, addItem, Item } from './features/items';
+import { listItems, addItem } from './features/items';
 import { rentItem, returnItem } from './features/rentals';
+import { Item }from './data/items'
 
 const router = express.Router();
 
 router.get('/items', (req: Request, res: Response): void => {
-    const items = listItems();
-    res.json(items);
+    const { name, minPrice, maxPrice } = req.query
+    let items: Item[] = listItems();
+
+    //TODO add service level filter functionality
+    if(name) {
+        const lowerCaseName = (name as string).toLowerCase()
+        items = items.filter((item) => {
+            item.name.toLowerCase().includes(lowerCaseName)
+        })
+    }
+
+    if (minPrice) {
+        items = items.filter((item) => item.price >= Number(minPrice))
+    }
+    if (maxPrice) {
+        items = items.filter((item) => item.price <= Number(maxPrice));
+    }
+
+    res.json(items)
+
 });
 
 router.post('/items', (req: Request, res: Response): void => {

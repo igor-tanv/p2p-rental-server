@@ -1,6 +1,6 @@
 import request, { Response } from 'supertest';
 import app, {stopServer} from '../src/index';
-import { Item } from '../src/features/items';
+import { Item } from '../src/data/items';
 
 
 describe('Items API', () => {

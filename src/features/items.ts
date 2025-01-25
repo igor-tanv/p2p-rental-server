@@ -1,12 +1,4 @@
-type Item = {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    available: boolean
-}
-
-const items: Item[] = []
+import {items, Item} from '../data/items'
 
 const listItems = (): Item[] => items
 
@@ -14,5 +6,5 @@ const addItem = (item: Item): void => {
     items.push(item)
 }
 
-export {Item, listItems, addItem}
+export { listItems, addItem }
 

@@ -1,19 +1,12 @@
-import { Item } from './items'; 
-
-type Rental = {
-    item: Item; 
-    startDate: string;
-    endDate: string;
-};
-
-const rentals: Rental[] = []; 
+import { Item } from '../data/items'; 
+import rentals from '../data/rentals'
 
 const isDateRangeOverlapping = (start1: Date, end1: Date, start2: Date, end2: Date): boolean => {
     return (start1 <= end2 && start2 <= end1);
 };
 
 // TODO: seperate into helpers module
-const hasConflict = (item: Item, startDate: string, endDate: string): boolean => { 
+const hasDateConflict = (item: Item, startDate: string, endDate: string): boolean => { 
     const newStart = new Date(startDate);
     const newEnd = new Date(endDate);
 
@@ -27,7 +20,7 @@ const hasConflict = (item: Item, startDate: string, endDate: string): boolean =>
 };
 
 const rentItem = (item: Item, startDate: string, endDate: string): string => { 
-    if (hasConflict(item, startDate, endDate)) {
+    if (hasDateConflict(item, startDate, endDate)) {
         throw new Error('The item is already rented for the selected date range.');
     }
 
@@ -48,4 +41,4 @@ const returnItem = (item: Item): string => {
 
 
 
-export { Rental, rentals, rentItem, returnItem }; 
+export { rentals, rentItem, returnItem }; 
